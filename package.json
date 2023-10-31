@@ -1,0 +1,24 @@
+{
+  "name": "stockreporter",
+  "version": "1.0.0",
+  "description": "Personal project to pratice using APIs and Databases",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "finnhub": "^1.2.18",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3",
+    "vitest": "^0.34.6"
+  }
+}
