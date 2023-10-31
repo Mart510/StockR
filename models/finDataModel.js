@@ -1,5 +1,5 @@
 // Model to manage data storage and retreival from fin data api
-import finnhub from 'finnhub';
+import * as finnhub from 'finnhub';
 
 // Example code fron finnhub docs
 
@@ -18,6 +18,16 @@ import finnhub from 'finnhub';
 // });
 
 
+// set constant API key and assigns it to the authentication object
+const api_key = finnhub.ApiClient.instance.authentication['finApiKey'];
+
+// assign key from .envfile
+api_key.apiKEY = process.env.FIN_KEY
+
+// gets the quote for apple
+finnhubClient.quote('AAPL', (error, data, response) => {
+    console.log(data)
+});
 
 // Get quote data for FAANG (used for testing) 
 export async function getMAGMA() {
