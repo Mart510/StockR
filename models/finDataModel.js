@@ -41,7 +41,7 @@ export async function quoteGetter(ticker) {
             // Error message
             console.error(`Error with ticker ${ticker}`);
             // Error for promise
-            //reject(console.error(`quoteData promise for ${ticker}, unfulfilled`))
+            reject(console.error(`quoteData promise for ${ticker}, unfulfilled`))
         } else {
             // create object 
             quoteData = {
