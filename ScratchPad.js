@@ -40,9 +40,9 @@ async function MAGMAQuoter(tickerArray) {
                 console.log(`Well shit, ticker: ${MAGMA[ticker]}, has an error`)
             } else {
                 // log the ticker
-                console.log(ticker)
+                //console.log(ticker)
                 // log the quote data
-                console.log(data);
+                //console.log(data);
             }
         })
         // wait 34ms seconds to see if the loop executes too fast and trips the rate limiter (rate limiter engages at over 30 calls per second, which is 1 call every 33.3ms, this way I'm always above the limiter )

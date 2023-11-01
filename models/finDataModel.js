@@ -2,7 +2,7 @@
 import { finnhubClient } from "../finnhubConfig.js";
 
 // Check if the markets open
-export async function gameTime(exchangeCode) {
+export async function marketOpenChecker(exchangeCode) {
     // object to store return info
     let marketStatusInfo;
     // set up promise for the data
@@ -41,7 +41,7 @@ export async function quoteGetter(ticker) {
             // Error message
             console.error(`Error with ticker ${ticker}`);
             // Error for promise
-            reject(console.error(`quoteData promise for ${ticker}, unfulfilled`))
+            //reject(console.error(`quoteData promise for ${ticker}, unfulfilled`))
         } else {
             // create object 
             quoteData = {
@@ -64,3 +64,4 @@ export async function quoteGetter(ticker) {
 
 // console.log(quoteyBoi.symbol)
 // console.log(quoteyBoi.quote)
+// console.log(quoteyBoi.response)
