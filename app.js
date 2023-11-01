@@ -2,6 +2,9 @@
 import express from 'express'; // web app framework for api calls
 import morgan from 'morgan'; // logging middleware
 
+// set up dot env in this file
+dotenv.config();
+
 // imports from routes
 
 

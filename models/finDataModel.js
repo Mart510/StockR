@@ -1,50 +1,66 @@
 // Model to manage data storage and retreival from fin data api
-import * as finnhub from 'finnhub';
+import { finnhubClient } from "../finnhubConfig.js";
 
-// Example code fron finnhub docs
-
-// sets the constant API key and assign it to the authentication object
-// const api_key = finnhub.ApiClient.instance.authentications['api_key'];
-
-// sample api key from docs
-// api_key.apiKey = "ckvneppr01qq199j3130ckvneppr01qq199j313g"
-
-// creates an instance of the defaultapi from finnhub lib.
-// const finnhubClient = new finnhub.DefaultApi()
-
-// invokes quote method on the finnhub client object to get stock info, in this case AAPL (Apple), error, data and response are all callback functions I need to create
-// finnhubClient.quote("AAPL", (error, data, response) => {
-//   console.log(data)
-// });
-
-
-// set constant API key and assigns it to the authentication object
-const api_key = finnhub.ApiClient.instance.authentication['finApiKey'];
-
-// assign key from .envfile
-api_key.apiKEY = process.env.FIN_KEY
-
-// gets the quote for apple
-finnhubClient.quote('AAPL', (error, data, response) => {
-    console.log(data)
-});
-
-// Get quote data for FAANG (used for testing) 
-export async function getMAGMA() {
-    // query finnhub for each ticker in MAGMA (M: Meta/META, A: Apple/AAPL, G: Alphabet(Google)/GOOGL, M: Microsoft/MSFT, A: Amazon/AMZN)
-    const MAGMA = ['META', 'APPL', 'GOOGL', 'MSFT', 'AMZN']
-    // object to hold the responses for each call
-    const MAGMAresponse = {
-        'META': null,
-        'AAPL': null,
-        'GOOGL': null,
-        'MSFT': null,
-        'AMZN': null
-    }
-    // loop thru the MAGAM and store the results in the variables
-    for (let stocks in MAGMA) {
-        MAGMAresponse[stocks] =  await MAGMA[stocks]
-    }
-
+// Check if the markets open
+export async function gameTime(exchangeCode) {
+    // object to store return info
+    let marketStatusInfo;
+    // set up promise for the data
+    await new Promise((resolve, reject) => {
+    // pass exchange code i.e US as a string to finnhub api client function
+    finnhubClient.marketStatus({'exchange': String(exchangeCode)}, (error, data, response) => {
+        if (error) {
+            // error message
+            console.error(`Error getting ${exchangeCode}, market status`)
+            // promise error
+            reject(console.error(`Error promise for ${exchangeCode}, unfulfilled`))
+        } else {
+                marketStatusInfo = {
+                    market: exchangeCode,
+                    isOpen: data,
+                    response: response,
+                }
+            }
+        })
+        // full fill the promise
+        resolve(marketStatusInfo);
+    })
+    // pass the info on
+    return marketStatusInfo;
 }
 
+// Get quote
+export async function quoteGetter(ticker) {
+    // object to store return info
+    let quoteData;
+    // set up the promise for the data
+    await new Promise((resolve, reject) => {
+    // call quote function
+    finnhubClient.quote(ticker, (error, data, response) => {
+        if (error) {
+            // Error message
+            console.error(`Error with ticker ${ticker}`);
+            // Error for promise
+            reject(console.error(`quoteData promise for ${ticker}, unfulfilled`))
+        } else {
+            // create object 
+            quoteData = {
+                symbol: ticker,
+                quote: data,
+                response: response,
+            };
+            // resolve promise with data
+            resolve(quoteData);
+        }
+    })
+})
+    // return the quoteData object
+    return quoteData;
+}
+
+
+// debug in place tester and logger, to be replaced with a proper unit test.
+// let quoteyBoi = await quoteGetter('AAPL')
+
+// console.log(quoteyBoi.symbol)
+// console.log(quoteyBoi.quote)
