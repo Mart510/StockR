@@ -25,10 +25,12 @@ const finnhubClient = new finnhub.DefaultApi();
 //     // debug logger // console.log(response)
 // });
 
+// using this as an argument so I can later do this with a return from SQL of the database
+// Array of all tickers I want quotes for
+const MAGMA = ['META', 'AAPL', 'GOOGL', 'MSFT', 'AMZN']
+
 // testing out getting all the quotes for MANGA using a loop
-async function MAGMAQuoter() {
-    // Array of all tickers I want quotes for
-    const MAGMA = ['META', 'AAPL', 'GOOGL', 'MSFT', 'AMZN']
+async function MAGMAQuoter(tickerArray) {
 
     // for loop going over and getting quote info for each ticker in MAGMA array
     for (let ticker of MAGMA) {
@@ -43,11 +45,11 @@ async function MAGMAQuoter() {
                 console.log(data);
             }
         })
-        // wait .1 seconds to see if the loop executes too fast and trips the rate limiter
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        // wait 34ms seconds to see if the loop executes too fast and trips the rate limiter (rate limiter engages at over 30 calls per second, which is 1 call every 33.3ms, this way I'm always above the limiter )
+        await new Promise((resolve) => setTimeout(resolve, 34));
 
     }
 }
 
 // function call
-MAGMAQuoter();
+MAGMAQuoter(MAGMA);
