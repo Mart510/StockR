@@ -24,11 +24,11 @@ async function bulkQuoter(tickerArray) {
             const singleReply = await finDataModel.quoteGetter(ticker);
             // if it's not a 200 for success, throw an error and stop
             if (singleReply.response.statusCode !== 200) {
-                //console.error(`Error with ${ticker}, stopping function`)
+                console.error(`Error with ${ticker}, stopping function`)
                 return;
             // if okay, store the ticker and the quote in quoteChunk
             } else {
-                // assings the ticker symbol as the key and pairs it with the quote data
+                // adds the quote data as an object into the array
                 quoteChunk.push(
                     {
                     symbol: ticker,
