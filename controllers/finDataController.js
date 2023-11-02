@@ -16,11 +16,8 @@ if (await finDataModel.marketOpenChecker('US')) {
 
 // Get quotes for every ticker in list
 async function bulkQuoter(tickerArray) {
-    // object to store all quotes
-    const quoteChunk = {
-        // symbol and quote as a key value pair
-        '' : {},
-    }
+    // Array to store all quote objects
+    const quoteChunk = []
     // for loop going over and getting quote info for each ticker in MAGMA array
     for (let ticker of tickerArray) {
             // store reply in an object to check it
@@ -32,7 +29,20 @@ async function bulkQuoter(tickerArray) {
             // if okay, store the ticker and the quote in quoteChunk
             } else {
                 // assings the ticker symbol as the key and pairs it with the quote data
-                quoteChunk[`ticker`] = singleReply.quote
+                quoteChunk.push(
+                    {
+                    symbol: ticker,
+                    quote: 
+                        {
+                        open: singleReply.quote.o,
+                        high: singleReply.quote.h,
+                        low: singleReply.quote.l,
+                        percentChange: singleReply.quote.dp,
+                        valueChange: singleReply.quote.d,
+                        current: singleReply.quote.c
+                        }
+                    }
+                    )
             }
             // wait 34ms seconds to see if the loop executes too fast and trips the rate limiter (rate limiter engages at over 30 calls per second, which is 1 call every 33.3ms, this way I'm always above the limiter )
             await new Promise((resolve) => setTimeout(resolve, 34));
