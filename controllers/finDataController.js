@@ -3,19 +3,20 @@ import * as finDataModel from '../models/finDataModel.js';
 
 
 // check market status
-async function checkMarket() {
+export async function checkMarket() {
 if (await finDataModel.marketOpenChecker('US')) {
     console.log('US IS OPEN')
     }
 }
 
+// currently returns 401 I don't have access error. To debug later
 //checkMarket();
 
 // get todays quote for MANGA for testing with hard coded array
 
 
 // Get quotes for every ticker in list
-async function bulkQuoter(tickerArray) {
+export async function bulkQuoter(tickerArray) {
     // Array to store all quote objects
     const quoteChunk = []
     // for loop going over and getting quote info for each ticker in MAGMA array
@@ -49,7 +50,8 @@ async function bulkQuoter(tickerArray) {
         }
         // log job is complete
         //console.log(`${Object.keys(quoteChunk)} quotes fetched, bulkQuoter function complete`)
-        console.log(quoteChunk)
+        //console.log(quoteChunk)
+        return quoteChunk;
     }
 
-bulkQuoter(['META', 'AAPL', 'GOOGL', 'MSFT', 'AMZN'])
+// bulkQuoter(['META', 'AAPL', 'GOOGL', 'MSFT', 'AMZN'])

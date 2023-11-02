@@ -3,17 +3,20 @@ import { finnhubClient } from "../finnhubConfig.js";
 
 // Check if the markets open
 export async function marketOpenChecker(exchangeCode) {
+    console.log(`Checking market status for ${exchangeCode}`);
     // object to store return info
     let marketStatusInfo;
     // set up promise for the data
     await new Promise((resolve, reject) => {
     // pass exchange code i.e US as a string to finnhub api client function
-    finnhubClient.marketStatus({'exchange': String(exchangeCode)}, (error, data, response) => {
+    finnhubClient.marketStatus({'exchange': 'US'}, (error, data, response) => {
         if (error) {
             // error message
             console.error(`Error getting ${exchangeCode}, market status`)
             // promise error
             reject(console.error(`Error promise for ${exchangeCode}, unfulfilled`))
+            // Log response error
+            console.error(response.body)
         } else {
                 marketStatusInfo = {
                     market: exchangeCode,
