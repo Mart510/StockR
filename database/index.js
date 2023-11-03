@@ -2,6 +2,7 @@
 // Import node-postgres (PG)
 import pg from 'pg';
 
+
 // Get the database connection string from the .env
 const connectionString = process.env.DATABASE_URL;
 

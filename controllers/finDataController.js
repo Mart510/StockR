@@ -49,9 +49,9 @@ export async function bulkQuoter(tickerArray) {
             await new Promise((resolve) => setTimeout(resolve, 34));
         }
         // log job is complete
-        //console.log(`${Object.keys(quoteChunk)} quotes fetched, bulkQuoter function complete`)
-        //console.log(quoteChunk)
+        console.log(`${Object.keys(quoteChunk)} quotes fetched, bulkQuoter function complete`)
+        console.log(quoteChunk)
         return quoteChunk;
     }
 
-// bulkQuoter(['META', 'AAPL', 'GOOGL', 'MSFT', 'AMZN'])
+bulkQuoter(['META', 'AAPL', 'GOOGL', 'MSFT', 'AMZN'])
