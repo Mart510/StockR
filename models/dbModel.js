@@ -1,7 +1,7 @@
 // Model to manage data storage and retrevial from PostGreSQL database
 
 
-// GET all symbols
+// GET all symbols 
 
 // GET all records
 
