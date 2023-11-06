@@ -17,3 +17,5 @@ dbRoutes.get("/symbols", dbController.getSymbolArray);
 // route for PATCH call
 dbRoutes.patch("/update/:symbol" , dbController.updateQuoteData);
 
+// experiment route to get symbols
+export const symbolArrayGetter = dbRoutes.get("/symbols", dbController.getSymbolArray);
