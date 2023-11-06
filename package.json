@@ -10,7 +10,7 @@
     "dev": "nodemon -r dotenv/config server.js",
     "unit-test": "vitest",
     "database-reset" : "node -r dotenv/config database/scripts/reset-database.js",
-    "main-test":  "nodemon -r dotenv/config main.js"
+    "start-main": "nodemon main.js"
   },
   "author": "",
   "license": "ISC",

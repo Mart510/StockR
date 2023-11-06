@@ -4,18 +4,36 @@
 import * as dbController from './controllers/dbController.js'
 import * as dbRoutes from './routes/dbRouting.js'
 
+// //
+import dotenv from 'dotenv';
+
+// // set up dot env in this file
+dotenv.config();
+// //
+
+// set env config for server url
+const serverUrl = 'http://localhost:4000'
+
 
 // get array of all symbols from database
 async function createSymbolsArray() {
+    // define api url
+    const apiURL = `${serverUrl}/symbols`
+    console.log(`apiURL = ${apiURL}`);
     // get symbols from database
-    console.log(`dbRoutes url: ${dbRoutes.symbolArrayGetter}`)
-    const symbolObj = await fetch(dbRoutes.symbolArrayGetter)
+    const symbolObj = await fetch(apiURL)
     // cleanup return object into an array of symbols
     // let symbolArray = [];
     // for (let object in symbolObj) {
     //     symbolArray.push(object.symbol)
     // };
-    console.log(symbolObj);
+    console.log(`typeof ${typeof symbolObj}
+    `)
+
+    const symbols = await symbolObj.json()
+
+    console.log(`symbols: ${JSON.stringify(symbols)}`);
+    
     // return symbolArray;
     }
     // // return array
