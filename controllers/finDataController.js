@@ -28,6 +28,7 @@ export async function bulkQuoter(tickerArray) {
             const singleReply = await finDataModel.quoteGetter(ticker);
             // Log the status code from the response
             console.log(`Status code for ${ticker}: ${singleReply.response.statusCode}`)
+            console.log(singleReply.quote)
 
             // if it's not a 200 for success, throw an error and stop
             if (singleReply.response.statusCode !== 200) {
