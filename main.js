@@ -2,6 +2,7 @@
 
 // imports
 import * as dbController from './controllers/dbController.js'
+import { bulkQuoter } from './controllers/finDataController.js';
 import * as dbRoutes from './routes/dbRouting.js'
 
 // //
@@ -21,30 +22,45 @@ async function createSymbolsArray() {
     const apiURL = `${serverUrl}/symbols`
     console.log(`apiURL = ${apiURL}`);
     // get symbols from database
-    const symbolObj = await fetch(apiURL)
-    // cleanup return object into an array of symbols
-    // let symbolArray = [];
-    // for (let object in symbolObj) {
-    //     symbolArray.push(object.symbol)
-    // };
-    console.log(`typeof ${typeof symbolObj}
-    `)
+    let symbolObj = await fetch(apiURL)
+    // Get the response body out of the response object
+    symbolObj = await symbolObj.json()
+    //console.log(symbolObj) // debug logger
 
-    const symbols = await symbolObj.json()
-
-    console.log(`symbols: ${JSON.stringify(symbols)}`);
+    // destructure the payload into just an array of symbols
+    const symbolArray = symbolObj.payload.map(objectArray => objectArray.symbol)
+    // .map means it's called on each item in the array and returns the .symbol, which gets added to the tickerSymbol Array
+    // console.log (`symbolArray at line 32 is: ${symbolArray}`) // debug logger
     
     // return symbolArray;
+    console.log(`Array of symbols created`)
+    return symbolArray
     }
     // // return array
-createSymbolsArray()
+
+
 // bulk quote from finnhub
 
 
 // bulk patch quote data into database
+// async function patcher(patchObject){
+    
+// }
 
 
 // Main function
+    export async function sNp500Quoteinator(){
     // get symbols array from database
+    console.log('Creating array of ticker symbols')
+    const tickerArray = await createSymbolsArray();
+    // console.log(tickerArray)
     // get bulk quotes using symbols array
+    console.log('Fetching quotes')
+    const quotePayloadForDatabase = await bulkQuoter(tickerArray);
     // use quotes and symbol to bulk patch data in the database
+    //console.log('Patching database en masse')
+    console.log(quotePayloadForDatabase)
+
+    }
+
+    sNp500Quoteinator();
