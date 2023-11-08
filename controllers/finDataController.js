@@ -26,9 +26,16 @@ export async function bulkQuoter(tickerArray) {
         try {
             // store reply in an object to check it
             const singleReply = await finDataModel.quoteGetter(ticker);
-            // Log the status code from the response
-            console.log(`Status code for ${ticker}: ${singleReply.response.statusCode}`)
-            console.log(singleReply.quote)
+            //Debuge Logger the status code from the response
+            //console.log(`Status code for ${ticker}: ${singleReply.response.statusCode}`)
+            // Log the quote in an easy to read manner
+            console.log(`
+                Symbol: \x1b[35m${ticker}\x1b[0m
+                Today's Open: \x1b[33m${singleReply.quote.o}\x1b[0m
+                Highest: \x1b[32m${singleReply.quote.h}\x1b[0m
+                Lowest: \x1b[31m${singleReply.quote.l}\x1b[0m\n`)
+                    
+            // \x1b[someNumberm tells the terminal to change the text color from this point. and \x1b[0m tells the terminal to reset to default from this point. This is done to tmake the terminal more readable
 
             // if it's not a 200 for success, throw an error and stop
             if (singleReply.response.statusCode !== 200) {

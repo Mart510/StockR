@@ -33,7 +33,7 @@ async function createSymbolsArray() {
     // console.log (`symbolArray at line 32 is: ${symbolArray}`) // debug logger
     
     // return symbolArray;
-    console.log(`Array of symbols created`)
+    //console.log(`Array of symbols created`)
     return symbolArray
     }
     // // return array
@@ -43,9 +43,34 @@ async function createSymbolsArray() {
 
 
 // bulk patch quote data into database
-// async function patcher(patchObject){
-    
-// }
+async function patcher(patchObject){
+    // intialise loop
+        for (objects in patchObject){
+        // define api url
+        const apiURL = `${serverUrl}/update/$${patchObject[objects].symbol}`
+        console.log(`apiURL = ${apiURL}`);
+        // write object to database
+        let patchObj = await fetch(apiURL, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'PATCH',
+            // creating json body to send
+            body: JSON.stringify({
+                price_open: patchObject[objects].quote.open,
+                price_high: patchObject[objects].quote.high,
+                price_low: patchObject[objects].quote.low,
+                price_percent_change: patchObject[objects].quote.percentChange,
+                price_value_change: patchObject[objects].quote.valueChange,
+                price_current: patchObject[objects].quote.current,
+            })
+        }
+            )
+        }
+    // log confirmation message
+
+}
 
 
 // Main function
@@ -56,10 +81,13 @@ async function createSymbolsArray() {
     // console.log(tickerArray)
     // get bulk quotes using symbols array
     console.log('Fetching quotes')
-    const quotePayloadForDatabase = await bulkQuoter(tickerArray);
+    //const quotePayloadForDatabase = await bulkQuoter(tickerArray);
+    const quotePayloadForDatabase = await bulkQuoter(['MSFT','AAPL','GOOGL','META','AMZN' ]); // for rapid testing purposes using MAGMA
+
     // use quotes and symbol to bulk patch data in the database
     //console.log('Patching database en masse')
     console.log(quotePayloadForDatabase)
+    await patcher(quotePayloadForDatabase)
 
     }
 
