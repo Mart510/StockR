@@ -45,9 +45,9 @@ async function createSymbolsArray() {
 // bulk patch quote data into database
 async function patcher(patchObject){
     // intialise loop
-        for (objects in patchObject){
+        for (let objects in patchObject){
         // define api url
-        const apiURL = `${serverUrl}/update/$${patchObject[objects].symbol}`
+        const apiURL = `${serverUrl}/update/${patchObject[objects].symbol}`
         console.log(`apiURL = ${apiURL}`);
         // write object to database
         let patchObj = await fetch(apiURL, {
@@ -64,6 +64,7 @@ async function patcher(patchObject){
                 price_percent_change: patchObject[objects].quote.percentChange,
                 price_value_change: patchObject[objects].quote.valueChange,
                 price_current: patchObject[objects].quote.current,
+                symbol: patchObject[objects].symbol
             })
         }
             )
@@ -81,8 +82,8 @@ async function patcher(patchObject){
     // console.log(tickerArray)
     // get bulk quotes using symbols array
     console.log('Fetching quotes')
-    //const quotePayloadForDatabase = await bulkQuoter(tickerArray);
-    const quotePayloadForDatabase = await bulkQuoter(['MSFT','AAPL','GOOGL','META','AMZN' ]); // for rapid testing purposes using MAGMA
+    const quotePayloadForDatabase = await bulkQuoter(tickerArray);
+    //const quotePayloadForDatabase = await bulkQuoter(['MSFT','AAPL','GOOGL','META','AMZN' ]); // for rapid testing purposes using MAGMA
 
     // use quotes and symbol to bulk patch data in the database
     //console.log('Patching database en masse')

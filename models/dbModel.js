@@ -54,12 +54,12 @@ export async function updateQuoteData(symbol, newQuoteData) {
     ])
     console.log(`symbol ${newQuoteData.symbol}`)
     console.log(`open ${newQuoteData.price_open}`)
-    console.log(`phigh ${newQuoteData.price_high}`)
+    console.log(`high ${newQuoteData.price_high}`)
     console.log(`low ${newQuoteData.price_low}`)
     console.log(`percent change ${newQuoteData.price_percent_change}`)
     console.log(`value change ${newQuoteData.price_value_change}`)
 
-    console.log(result)
+    //console.log(result)
     // Returns just the symbol for confirmation
     return result || null
 }
