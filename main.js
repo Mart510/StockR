@@ -48,7 +48,9 @@ async function patcher(patchObject){
         for (let objects in patchObject){
         // define api url
         const apiURL = `${serverUrl}/update/${patchObject[objects].symbol}`
-        console.log(`apiURL = ${apiURL}`);
+        //console.log(`apiURL = ${apiURL}`); // debug logger
+        console.log(`${objects} of ${patchObject.length}`)
+
         // write object to database
         let patchObj = await fetch(apiURL, {
             headers: {

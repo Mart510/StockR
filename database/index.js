@@ -21,4 +21,5 @@ if (!connectionString) {
 export const pool = new pg.Pool({
     // Pass connection string to pool so it know's how to connect
     connectionString,
+    max: 4, // setting the maximum number of connections the plan only allows a max of 5 concurrent connections
 })
