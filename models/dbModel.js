@@ -54,24 +54,47 @@ export async function updateQuoteData(symbol, newQuoteData) {
     ])
     console.log(`symbol ${newQuoteData.symbol}`)
     console.log(`open ${newQuoteData.price_open}`)
-    console.log(`phigh ${newQuoteData.price_high}`)
+    console.log(`high ${newQuoteData.price_high}`)
     console.log(`low ${newQuoteData.price_low}`)
     console.log(`percent change ${newQuoteData.price_percent_change}`)
     console.log(`value change ${newQuoteData.price_value_change}`)
 
-    console.log(result)
+    //console.log(result)
     // Returns just the symbol for confirmation
     return result || null
 }
 
 // GET record with highest gain by value
+export async function getHighestbyVal() {
+    // query the database to get the record with the biggest value_change property
+    const result = await databaseQuery(`SELECT * FROM tickerholder WHERE price_value_change = (SELECT MAX(price_value_change) FROM tickerholder);`);
 
+    return result.rows;
+}
 
 // GET record with biggest loss by value
+export async function getWorstbyVal() {
+    // query the database to get the record with the smallest value_change property
+    const result = await databaseQuery(`SELECT * FROM tickerholder WHERE price_value_change = (SELECT MIN(price_value_change) FROM tickerholder);`);
+    
+    return result.rows;
 
+}
 
 // GET record with highest gain by percentage
+export async function getHighestbyPercent() {
+    // query the database to get the record with the biggest percent_change property
+    const result = await databaseQuery(`SELECT * FROM tickerholder WHERE price_percent_change = (SELECT MAX(price_percent_change) FROM tickerholder);`);
+    
+    return result.rows;
 
+}
 
 // GET record with biggest loss by percentage
+export async function getWorstbyPercent() {
+    // query the database to get the record with the smallest percent_change property
+    const result = await databaseQuery(`SELECT * FROM tickerholder WHERE price_percent_change = (SELECT MIN(price_percent_change) FROM tickerholder);`);
+    
+    return result.rows;
 
+}

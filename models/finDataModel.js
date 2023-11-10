@@ -34,31 +34,39 @@ export async function marketOpenChecker(exchangeCode) {
 
 // Get quote
 export async function quoteGetter(ticker) {
-    // object to store return info
-    let quoteData;
+    try {
+        // instiantiate return object outside of the promise callback
+        let quoteData;
     // set up the promise for the data
     await new Promise((resolve, reject) => {
-    // call quote function
-    finnhubClient.quote(ticker, (error, data, response) => {
-        if (error) {
-            // Error message
-            console.error(`Error with ticker ${ticker}`);
-            // Error for promise
-            reject(console.error(`quoteData promise for ${ticker}, unfulfilled`))
-        } else {
-            // create object 
-            quoteData = {
-                symbol: ticker,
-                quote: data,
-                response: response,
-            };
-            // resolve promise with data
-            resolve(quoteData);
-        }
+        // call quote function
+        finnhubClient.quote(ticker, (error, data, response) => {
+            if (error) {
+                // Error message
+                console.error(`Error with ticker QuoteGetter line 44 ${ticker}`);
+                // log status code
+                console.error(`Status Code: ${JSON.stringify(response)}`)
+
+                // Reject the promise with an error
+                reject(new Error(`quoteData promise for ${ticker}, unfulfilled`));
+            } else {
+                // create object to store return info
+                quoteData = {
+                    symbol: ticker,
+                    quote: data,
+                    response: response,
+                };
+                // resolve promise with data
+                resolve(quoteData);
+            }
+        })
     })
-})
     // return the quoteData object
     return quoteData;
+} catch (error) {
+    // Handle error message
+    console.error(`Error with ticker QuoteGetter line 63 ${ticker}`);
+}
 }
 
 
