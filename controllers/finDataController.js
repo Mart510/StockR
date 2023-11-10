@@ -63,19 +63,14 @@ export async function bulkQuoter(tickerArray) {
             await new Promise((resolve) => setTimeout(resolve, 1001));
         } catch (error) {
             console.error(`Error with ${ticker}: ${error.message}`);
-            // log the status code even if there is an error, (429 is the rate limit response from finnhub)
-            if (singleReply) {
-            console.log(`Error code for ${ticker}: ${singleReply.response.statusCode}`)
             }
         }
-    }
-        } catch (error) {
+    } catch (error) {
             console.error(`An error occurred in bulkQuoter: ${error.message}`);
-        }       
+        } finally {      
     // log job is complete
     console.log(`${Object.keys(quoteChunk)} quotes fetched, bulkQuoter function complete`)
     console.log(`quoteChunk: ${quoteChunk}`)
-    return quoteChunk;
     }
-
-//bulkQuoter(['MMM'])
+    return quoteChunk;
+}

@@ -1,9 +1,7 @@
 // Contains operational logic for requests between finnhub and postgres
 
 // imports
-import * as dbController from './controllers/dbController.js'
 import { bulkQuoter } from './controllers/finDataController.js';
-import * as dbRoutes from './routes/dbRouting.js'
 
 // //
 import dotenv from 'dotenv';
