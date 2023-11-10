@@ -118,7 +118,7 @@ async function winLoss() {
 
 // Main function
     export async function sNp500Quoteinator(){
-    // get symbols array from database
+    //get symbols array from database
     console.log('Creating array of ticker symbols')
     const tickerArray = await createSymbolsArray();
     // console.log(tickerArray)
@@ -133,11 +133,11 @@ async function winLoss() {
 
     const results = await winLoss()
 
-    console.log(results)
-    console.log(`Todays winner by value ${results.biggestValue.name} with an increase of ${results.biggestValue.price_value_change}`)
-    console.log(`Todays winner by percent ${results.biggestPercent.name} with an increase of ${results.biggestPercent.price_percent_change}%`)
-    console.log(`Todays loser by value ${results.worstLoss.name} with a decrease of ${results.worstLoss.price_value_change}`)
-    console.log(`Todays loser by value ${results.worstPercent.name} with a decrease of ${results.worstPercent.price_percent_change}$`)
+    //console.log(results)
+    console.log(`Todays biggest gain by value is ${results.biggestValue.name} with an increase of ${results.biggestValue.price_value_change}`)
+    console.log(`Todays biggest gain by percent is ${results.biggestPercent.name} with an increase of ${results.biggestPercent.price_percent_change}%`)
+    console.log(`Todays worst performer by value is ${results.worstLoss.name} with a decrease of ${results.worstLoss.price_value_change}`)
+    console.log(`Todays worst performer by percent is ${results.worstPercent.name} with a decrease of ${results.worstPercent.price_percent_change}$`)
     }
 
     sNp500Quoteinator();
