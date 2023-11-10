@@ -38,10 +38,6 @@ async function createSymbolsArray() {
     }
     // // return array
 
-
-// bulk quote from finnhub
-
-
 // bulk patch quote data into database
 async function patcher(patchObject){
     // intialise loop
@@ -72,8 +68,54 @@ async function patcher(patchObject){
             )
         }
     // log confirmation message
+    console.log('All quotes written to database')
 
 }
+
+// Get results
+async function winLoss() {
+    // set api url
+    let apiURL = `${serverUrl}/max/`;
+
+    // Get and store Top results
+    const topResults = {};
+
+    // By value
+    let response = await fetch(`${apiURL}value`);
+    // parse JSON and clean up the json
+    const { payload: maxValpayload } = await response.json();
+    topResults.biggestValue = maxValpayload[0];
+
+    // By Percentage
+    response = await fetch(`${apiURL}percent`);
+    // parse JSON and clean up the json
+    const { payload: maxPerpayload } = await response.json();
+    topResults.biggestPercent = maxPerpayload[0];
+
+    // Get and store Bottom results
+    apiURL = `${serverUrl}/min/`;
+    const bottomResults = {};
+
+    // By value
+    response = await fetch(`${apiURL}value`);
+    // parse JSON and clean up the json
+    const { payload: minValpayload } = await response.json();
+    bottomResults.worstLoss = minValpayload[0];
+
+    // By percent
+    response = await fetch(`${apiURL}percent`);
+    // parse JSON and clean up the json
+    const { payload: minPerpayload } = await response.json();
+    bottomResults.worstPercent = minPerpayload[0];
+
+    return {
+        'biggestValue': topResults.biggestValue,
+        'biggestPercent': topResults.biggestPercent,
+        'worstLoss': bottomResults.worstLoss,
+        'worstPercent': bottomResults.worstPercent
+    };
+}
+
 
 
 // Main function
@@ -85,13 +127,19 @@ async function patcher(patchObject){
     // get bulk quotes using symbols array
     console.log('Fetching quotes')
     const quotePayloadForDatabase = await bulkQuoter(tickerArray);
-    //const quotePayloadForDatabase = await bulkQuoter(['MSFT','AAPL','GOOGL','META','AMZN' ]); // for rapid testing purposes using MAGMA
 
     // use quotes and symbol to bulk patch data in the database
-    //console.log('Patching database en masse')
+    console.log('Patching database en masse')
     console.log(quotePayloadForDatabase)
     await patcher(quotePayloadForDatabase)
 
+    const results = await winLoss()
+
+    console.log(results)
+    console.log(`Todays winner by value ${results.biggestValue.name} with an increase of ${results.biggestValue.price_value_change}`)
+    console.log(`Todays winner by percent ${results.biggestPercent.name} with an increase of ${results.biggestPercent.price_percent_change}%`)
+    console.log(`Todays loser by value ${results.worstLoss.name} with a decrease of ${results.worstLoss.price_value_change}`)
+    console.log(`Todays loser by value ${results.worstPercent.name} with a decrease of ${results.worstPercent.price_percent_change}$`)
     }
 
     sNp500Quoteinator();

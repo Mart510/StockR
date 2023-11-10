@@ -19,3 +19,15 @@ dbRoutes.patch("/update/:symbol" , dbController.updateQuoteData);
 
 // experiment route to get symbols
 export const symbolArrayGetter = dbRoutes.get("/symbols", dbController.getSymbolArray);
+
+// route to get highest gain by value
+dbRoutes.get("/max/value", dbController.getBigValue);
+
+// route to get biggest loss by value
+dbRoutes.get("/min/value", dbController.getBigLoss)
+
+// route to get highest gain by percent
+dbRoutes.get("/max/percent", dbController.getBigPercent);
+
+// route to get biggest loss by percent
+dbRoutes.get("/min/percent", dbController.getBigLossPercent);

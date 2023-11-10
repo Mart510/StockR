@@ -26,5 +26,28 @@ export async function updateQuoteData(req, res) {
     // return confirmation
         res.status(200).json({status: 'success', payload: update});
     }
+}
 
+// GET record with highest gain by value
+export async function getBigValue(req, res) {
+    const data = await dbModel.getHighestbyVal();
+    res.status(200).json({status: "success", payload: data});
+}
+
+// GET record with biggest loss by value
+export async function getBigLoss(req, res) {
+    const data = await dbModel.getWorstbyVal();
+    res.status(200).json({status: "success", payload: data});
+}
+
+// GET record with highest gain by percentage
+export async function getBigPercent(req, res) {
+    const data = await dbModel.getHighestbyPercent();
+    res.status(200).json({status: "success", payload: data});
+}
+
+// GET record with biggest loss by percentage
+export async function getBigLossPercent(req, res) {
+    const data = await dbModel.getWorstbyPercent();
+    res.status(200).json({status: "success", payload: data});
 }
