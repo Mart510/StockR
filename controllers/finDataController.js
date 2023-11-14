@@ -59,7 +59,7 @@ export async function bulkQuoter(tickerArray) {
                     }
                     )
             }
-            // wait 34ms seconds to see if the loop executes too fast and trips the rate limiter (rate limiter engages at over 30 calls per second, which is 1 call every 33.3ms, this way I'm always above the limiter )
+            // wait 34ms seconds to see if the loop executes too fast and trips the rate limiter (rate limiter engages at over 30 calls per second, which is 1 call every 33.3ms, this way I'm always above the limiter ) 
             await new Promise((resolve) => setTimeout(resolve, 1001));
         } catch (error) {
             console.error(`Error with ${ticker}: ${error.message}`);
